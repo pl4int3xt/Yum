@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -35,7 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import com.example.kernel.ui.theme.KernelTheme
+import com.example.kernel.presentation.ui.theme.KernelTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
@@ -58,29 +59,6 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Scaffold(
                         topBar = {
-                            TopAppBar(
-                                colors = TopAppBarDefaults.smallTopAppBarColors(
-                                    containerColor = androidx.compose.ui.graphics.Color.Transparent,
-                                    titleContentColor = androidx.compose.ui.graphics.Color.White,
-                                    navigationIconContentColor = androidx.compose.ui.graphics.Color.White
-                                ),
-                                navigationIcon = {
-                                    IconButton(
-                                        modifier = Modifier
-                                            .background(
-                                                color = androidx.compose.ui.graphics.Color.Transparent,
-                                                shape = CircleShape
-                                            )
-                                            .padding(5.dp)
-                                        ,
-                                        onClick = { /*TODO*/ }) {
-                                        Icons.Default.ArrowBack
-                                    }
-                                },
-                                title = {
-                                    Text(text = "House")
-                                }
-                            )
                         }
                     ) {
                         Column(
