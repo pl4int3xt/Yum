@@ -29,8 +29,12 @@ fun MainTopAppBar(
     onClickNavigation: () -> Unit,
     onClickAction: () -> Unit
 ) {
+    val topAppBarState = rememberTopAppBarState()
     TopAppBar(
-        scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+        scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
+            state = topAppBarState,
+            canScroll = { true }
+        ),
         modifier = Modifier.padding(5.dp),
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = Color.Transparent,
