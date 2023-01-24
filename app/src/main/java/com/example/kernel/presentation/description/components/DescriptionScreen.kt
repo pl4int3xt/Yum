@@ -52,7 +52,7 @@ fun DescriptionScreen(
     val context = LocalContext.current
     val state = viewModel.state.value
 
-    LaunchedEffect(context){
+    LaunchedEffect(key1 = true){
         viewModel.uiEvent.onEach { event ->
             when(event){
                 is UiEvent.ShowToast -> {

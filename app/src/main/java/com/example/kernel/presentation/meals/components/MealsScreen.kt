@@ -48,7 +48,7 @@ fun MealsScreen(
     val context = LocalContext.current
     val state = viewModel.state.value
 
-    LaunchedEffect(context){
+    LaunchedEffect(key1 = true){
         viewModel.uiEvent.onEach { event ->
             when(event){
                 is UiEvent.ShowToast -> {
@@ -56,8 +56,7 @@ fun MealsScreen(
                         context,
                         event.message,
                         Toast.LENGTH_SHORT
-                    ).show()
-                }
+                    ).show() }
                 is UiEvent.PopBackStack -> onPopBackStack()
                 else -> Unit
             }

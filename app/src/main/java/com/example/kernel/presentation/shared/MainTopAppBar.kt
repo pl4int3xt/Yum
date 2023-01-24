@@ -49,9 +49,7 @@ fun MainTopAppBar(
                     focusedElevation = 5.dp,
                     hoveredElevation = 5.dp,
                 ),
-                onClick = {
-                    onClickNavigation()
-                }
+                onClick = { onClickNavigation() }
             ){
                 Icon(
                     tint = Color.Black,

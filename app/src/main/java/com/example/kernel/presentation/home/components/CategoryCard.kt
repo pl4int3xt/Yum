@@ -38,9 +38,7 @@ fun CategoryCard(
         verticalArrangement = Arrangement.Center
     ){
         Text(
-            modifier = Modifier.fillMaxWidth()
-                .padding(5.dp)
-            ,
+            modifier = Modifier.padding(5.dp),
             text = name,
         )
         AsyncImage(model = image, contentDescription = "category image")
