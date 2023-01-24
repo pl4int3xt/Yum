@@ -1,4 +1,5 @@
 package com.example.kernel.presentation.description
 
-class DescriptionScreenEvents {
+sealed class DescriptionScreenEvents {
+    object OnExitClicked: DescriptionScreenEvents()
 }
