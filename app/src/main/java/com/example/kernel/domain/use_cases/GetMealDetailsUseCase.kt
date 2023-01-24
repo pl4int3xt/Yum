@@ -21,8 +21,8 @@ class GetMealDetailsUseCase @Inject constructor(
     operator fun invoke(meal: String): Flow<Resource<MealDetailsModel>> = flow {
         try {
             emit(Resource.Loading())
-            val details = repositoryService.getMealDetails(meal).toMealDetailsDto()
-            emit(Resource.Success(details))
+            val details = repositoryService.getMealDetails(meal).meals.map { it.toMealDetailsDto() }
+            emit(Resource.Success(details.first()))
         } catch (e: RedirectResponseException){
             emit(Resource.Error("Error: ${e.response.status.description}"))
         } catch (e: ClientRequestException){
