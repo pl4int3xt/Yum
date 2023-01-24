@@ -1,6 +1,8 @@
 package com.example.kernel.presentation.shared
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -33,19 +35,18 @@ fun MainTopAppBar(
         ),
         navigationIcon = {
             Button(
+                modifier = Modifier.padding(5.dp),
+                shape = CircleShape,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                ),
+                contentPadding = PaddingValues(0.dp),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 5.dp,
                     pressedElevation = 5.dp,
                     focusedElevation = 5.dp,
                     hoveredElevation = 5.dp,
                 ),
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = CircleShape
-                    )
-                    .clip(CircleShape)
-                ,
                 onClick = {
                     onClickNavigation()
                 }
@@ -58,18 +59,18 @@ fun MainTopAppBar(
         actions = {
             if (actions != null) {
                 Button(
+                    modifier = Modifier.padding(5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                    ),
+                    contentPadding = PaddingValues(0.dp),
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 5.dp,
                         pressedElevation = 5.dp,
                         focusedElevation = 5.dp,
                         hoveredElevation = 5.dp,
                     ),
-                    modifier = Modifier
-                        .background(
-                            color = Color.White,
-                            shape = CircleShape
-                        )
-                        .clip(CircleShape)
+                    shape = CircleShape
                     ,
                     onClick = { onClickAction() }) {
                         Icon(

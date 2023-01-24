@@ -2,12 +2,16 @@ package com.example.kernel.presentation.description.components
 
 import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
@@ -22,6 +26,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -76,7 +83,7 @@ fun DescriptionScreen(
         topBar = {
             state.mealDetails?.let {
                 MainTopAppBar(
-                    title = it.name,
+                    title = "",
                     navigationIcon = Icons.Default.ArrowBackIos,
                     onClickNavigation = { viewModel.onEvent(DescriptionScreenEvents.OnExitClicked) }) {
                 }
@@ -91,22 +98,28 @@ fun DescriptionScreen(
         ) {
             LazyColumn(){
                 item {
-                    Column(
-                        modifier = Modifier.height(200.dp)
-                    ) {
-                        Text(text = "")
+                    Box (
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(300.dp),
+                        contentAlignment = Alignment.Center
+                    ){
+                        AsyncImage(
+                            contentScale = ContentScale.FillBounds,
+                            model = state.mealDetails?.image, contentDescription = "image")
                     }
                 }
                 item {
-                    AsyncImage(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                        ,
-                        model = state.mealDetails?.image, contentDescription = "image")
-                }
-                item {
-                    Column() {
+                    Column(
+                        modifier = Modifier.padding(5.dp)
+                    ) {
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.name,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            )
+                        }
                         state.mealDetails?.let { it1 ->
                             Text(
                                 text = it1.category,
@@ -119,6 +132,18 @@ fun DescriptionScreen(
                                 text = it1.area,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 20.sp
+                            )
+                        }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.ingredient1,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.ingredient10,
+                                fontWeight = FontWeight.Bold,
                             )
                         }
                     }
