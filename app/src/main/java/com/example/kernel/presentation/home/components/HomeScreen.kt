@@ -1,6 +1,7 @@
 package com.example.kernel.presentation.home.components
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -24,8 +25,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,6 +38,8 @@ import androidx.navigation.NavHostController
 import com.example.kernel.presentation.home.HomeScreenViewModel
 import com.example.kernel.presentation.screen.Screens
 import com.example.kernel.presentation.shared.MainTopAppBar
+import com.example.kernel.presentation.uievents.UiEvent
+import kotlinx.coroutines.flow.onEach
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
@@ -43,8 +48,23 @@ fun HomeScreen(
     navHostController: NavHostController,
     viewModel: HomeScreenViewModel = hiltViewModel()
 ) {
-
+    val context = LocalContext.current
     val state = viewModel.state.value
+
+    LaunchedEffect(context){
+        viewModel.uiEvent.onEach {event ->
+            when(event){
+                is UiEvent.ShowToast -> {
+                    Toast.makeText(
+                        context,
+                        event.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> Unit
+            }
+        }
+    }
 
     val pullRefreshState = rememberPullRefreshState(
         refreshing = state.isLoading, onRefresh = {
@@ -76,7 +96,7 @@ fun HomeScreen(
             LazyColumn(){
                 item {
                     Column(
-                        modifier = Modifier.height(200.dp)
+                        modifier = Modifier.height(100.dp)
                     ) {
 
                     }
@@ -105,17 +125,6 @@ fun HomeScreen(
                         }
                     )
                 }
-            }
-            if (state.error.isNotBlank()){
-                Text(
-                    text = state.error,
-                    color = androidx.compose.material.MaterialTheme.colors.error,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .align(Alignment.Center)
-                )
             }
             PullRefreshIndicator(
                 refreshing = state.isLoading,

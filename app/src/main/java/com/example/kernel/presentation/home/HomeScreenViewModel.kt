@@ -37,6 +37,7 @@ class HomeScreenViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _state.value = HomeScreenState(error = result.message?:"unexpected error occurred")
+                    sendUiEvent(UiEvent.ShowToast(result.message?:"unexpected error occurred"))
                 }
                 is Resource.Success -> {
                     _state.value = HomeScreenState(categories = result.data ?: emptyList())
