@@ -8,6 +8,7 @@ import com.example.kernel.data.remote.dto.MealDto
 import com.example.kernel.domain.repository.RepositoryService
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import io.ktor.client.request.url
 import javax.inject.Inject
 
@@ -19,7 +20,10 @@ class RepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMeals(category: String): MealDto {
-        TODO("Not yet implemented")
+        return httpClient.get {
+            url(Constants.GET_MEALS_URL)
+            parameter(key = "C" , value = category)
+        }
     }
 
     override suspend fun getMealDetails(meal: String): MealDetailsDto {

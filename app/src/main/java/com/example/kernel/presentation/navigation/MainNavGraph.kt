@@ -24,9 +24,11 @@ fun MainNavGraph(
             WelcomeScreen()
         }
         composable(route = Screens.HomeScreen.route){
-            HomeScreen()
+            HomeScreen(
+                navHostController = navHostController
+            )
         }
-        composable(route = Screens.MealsScreen.route){
+        composable(route = Screens.MealsScreen.route + "/{category}"){
             MealsScreen()
         }
         composable(route = Screens.DescriptionScreen.route){

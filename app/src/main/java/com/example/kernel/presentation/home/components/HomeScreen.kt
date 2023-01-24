@@ -31,13 +31,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.kernel.presentation.home.HomeScreenViewModel
+import com.example.kernel.presentation.screen.Screens
 import com.example.kernel.presentation.shared.MainTopAppBar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
+    navHostController: NavHostController,
     viewModel: HomeScreenViewModel = hiltViewModel()
 ) {
 
@@ -95,9 +98,12 @@ fun HomeScreen(
                 items(state.categories.size){ i ->
                     CategoryCard(
                         name = state.categories[i].name,
-                        image = state.categories[i].thumb,)
-                    {
-                    }
+                        image = state.categories[i].thumb,
+                        onclick = {
+                            navHostController.navigate(
+                                Screens.MealsScreen.route + "/${state.categories[i].name}")
+                        }
+                    )
                 }
             }
             if (state.error.isNotBlank()){

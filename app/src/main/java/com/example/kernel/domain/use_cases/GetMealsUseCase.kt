@@ -2,7 +2,9 @@ package com.example.kernel.domain.use_cases
 
 import com.example.kernel.common.Resource
 import com.example.kernel.data.remote.dto.toCategoryModel
+import com.example.kernel.data.remote.dto.toMealModel
 import com.example.kernel.domain.model.CategoryModel
+import com.example.kernel.domain.model.MealModel
 import com.example.kernel.domain.repository.RepositoryService
 import io.ktor.client.features.ClientRequestException
 import io.ktor.client.features.RedirectResponseException
@@ -13,14 +15,14 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
 
-class GetCategoriesUseCase @Inject constructor(
+class GetMealsUseCase @Inject constructor(
     private val repositoryService: RepositoryService
 ) {
-    operator fun invoke(): Flow<Resource<List<CategoryModel>>> = flow {
+    operator fun invoke(category: String): Flow<Resource<List<MealModel>>> = flow {
         try {
             emit(Resource.Loading())
-            val categories = repositoryService.getCategories().categories.map { it.toCategoryModel() }
-            emit(Resource.Success(categories))
+            val meals = repositoryService.getMeals(category).meals.map { it.toMealModel() }
+            emit(Resource.Success(meals))
         } catch (e: RedirectResponseException){
             emit(Resource.Error("Error: ${e.response.status.description}"))
         } catch (e: ClientRequestException){
@@ -29,8 +31,6 @@ class GetCategoriesUseCase @Inject constructor(
             emit(Resource.Error("Error: ${e.response.status.description}"))
         } catch (e: IOException){
             emit(Resource.Error("Can't reach server, check your internet connection"))
-        }catch (e: TimeoutCancellationException){
-            emit(Resource.Error("Timeout, check your internet connection"))
         }
     }
 }
