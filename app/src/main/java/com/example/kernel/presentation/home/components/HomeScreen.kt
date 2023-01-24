@@ -65,7 +65,9 @@ fun HomeScreen(
                 .pullRefresh(pullRefreshState)
                 .fillMaxHeight(1f)
         ) {
-            LazyColumn(){
+            LazyHorizontalGrid(
+                rows = GridCells.Fixed(2)
+            ){
                 item {
                     Text(text = "Find Best Recipe\nfor cooking")
                 }

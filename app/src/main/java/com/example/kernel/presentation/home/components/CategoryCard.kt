@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import coil.*
 import coil.compose.AsyncImage
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryCard(
     name: String,
@@ -24,10 +26,11 @@ fun CategoryCard(
     description: String,
     onclick: () -> Unit
 ) {
-    CategoryCard(
-        name = name,
-        image = image,
-        description = description,
-        onclick = onclick
-    )
+    Card(onClick = { onclick() }) {
+        Column() {
+            Text(text = name)
+            Text(text = description)
+        }
+        AsyncImage(model = image, contentDescription = "category image")
+    }
 }
