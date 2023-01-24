@@ -3,6 +3,7 @@ package com.example.kernel.presentation.shared
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -28,6 +29,7 @@ fun MainTopAppBar(
     onClickAction: () -> Unit
 ) {
     TopAppBar(
+        modifier = Modifier.padding(5.dp),
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = Color.Transparent,
             titleContentColor = Color.Black,
@@ -35,11 +37,12 @@ fun MainTopAppBar(
         ),
         navigationIcon = {
             Button(
+                modifier = Modifier.size(50.dp),
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                 ),
-                contentPadding = PaddingValues(0.dp),
+                contentPadding = PaddingValues(10.dp),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 5.dp,
                     pressedElevation = 5.dp,
@@ -51,7 +54,6 @@ fun MainTopAppBar(
                 }
             ){
                 Icon(
-                    modifier = Modifier.padding(5.dp),
                     tint = Color.Black,
                     imageVector = navigationIcon, contentDescription = "")
             }
@@ -59,6 +61,7 @@ fun MainTopAppBar(
         actions = {
             if (actions != null) {
                 Button(
+                    modifier = Modifier.size(50.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.White,
                     ),
@@ -73,7 +76,6 @@ fun MainTopAppBar(
                     ,
                     onClick = { onClickAction() }) {
                         Icon(
-                            modifier = Modifier.padding(5.dp),
                             tint = Color.Black,
                             imageVector = actions, contentDescription = "")
                 }
