@@ -36,7 +36,7 @@ fun MainNavGraph(
         }
         composable(route = Screens.DescriptionScreen.route + "/{meal}"){
             DescriptionScreen(
-
+                onPopBackStack = { navHostController.popBackStack() }
             )
         }
     }
