@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import coil.*
 import coil.compose.AsyncImage
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryCard(
     name: String,
@@ -25,23 +24,10 @@ fun CategoryCard(
     description: String,
     onclick: () -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .shadow(
-                elevation = 10.dp
-            )
-            .height(200.dp)
-            .clickable { onclick() }
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.6f)
-        ) {
-            Text(text = name)
-            Text(text = description)
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-        AsyncImage(model = image, contentDescription = "category image")
-    }
+    CategoryCard(
+        name = name,
+        image = image,
+        description = description,
+        onclick = onclick
+    )
 }

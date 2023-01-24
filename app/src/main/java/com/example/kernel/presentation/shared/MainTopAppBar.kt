@@ -34,20 +34,26 @@ fun MainTopAppBar(
             IconButton(
                 modifier = Modifier
                     .background(
-                        color = Color.Transparent,
+                        color = Color.White,
                         shape = CircleShape
                     )
                 ,
                 onClick = { onClickNavigation() }) {
                 Icon(
-                    tint = Color.White,
+                    tint = Color.Black,
                     imageVector = navigationIcon, contentDescription = "")
             }
         },
         actions = {
-            IconButton(onClick = { onClickAction() }) {
+            IconButton(
+                modifier = Modifier
+                    .background(
+                        color = Color.White,
+                        shape = CircleShape
+                    ),
+                onClick = { onClickAction() }) {
                 Icon(
-                    tint = Color.White,
+                    tint = Color.Black,
                     imageVector = actions, contentDescription = "")
             }
         },

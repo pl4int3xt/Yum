@@ -6,8 +6,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -22,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.kernel.presentation.home.HomeScreenViewModel
+import com.example.kernel.presentation.shared.MainTopAppBar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
@@ -43,7 +49,16 @@ fun HomeScreen(
         state = pullRefreshState,
         contentColor = MaterialTheme.colorScheme.primary
     )
-    Scaffold() {
+    Scaffold(
+        topBar = {
+            MainTopAppBar(
+                title = "Home",
+                navigationIcon = Icons.Default.Home,
+                actions = Icons.Default.Logout,
+                onClickNavigation = { /*TODO*/ }) {
+            }
+        }
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -62,7 +77,6 @@ fun HomeScreen(
                         name = state.categories[i].name,
                         image = state.categories[i].thumb,
                         description = state.categories[i].description) {
-
                     }
                 }
             }
