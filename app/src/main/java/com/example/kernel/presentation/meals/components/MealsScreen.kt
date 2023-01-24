@@ -93,27 +93,13 @@ fun MealsScreen(
             LazyColumn(){
                 item {
                     Column(
-                        modifier = Modifier.height(200.dp)
+                        modifier = Modifier.height(50.dp)
                     ) {
                         Text(text = "")
                     }
                 }
-                item {
-                    Text(
-                        text = "Find Best Recipe\nfor cooking",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 25.sp
-                    )
-                }
-                item {
-                    Text(
-                        text = "Categories",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp
-                    )
-                }
                 items(state.meals.size){ i ->
-                    CategoryCard(
+                    SingleMeal(
                         name = state.meals[i].name,
                         image = state.meals[i].thumb,
                         onclick = {
