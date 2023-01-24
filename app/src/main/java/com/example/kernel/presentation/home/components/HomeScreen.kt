@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
@@ -65,9 +66,12 @@ fun HomeScreen(
                 .pullRefresh(pullRefreshState)
                 .fillMaxHeight(1f)
         ) {
-            LazyHorizontalGrid(
-                rows = GridCells.Fixed(2)
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2)
             ){
+                item {
+
+                }
                 item {
                     Text(text = "Find Best Recipe\nfor cooking")
                 }
