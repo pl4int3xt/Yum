@@ -29,10 +29,15 @@ fun MainNavGraph(
             )
         }
         composable(route = Screens.MealsScreen.route + "/{category}"){
-            MealsScreen()
+            MealsScreen(
+                navHostController = navHostController,
+                onPopBackStack = { navHostController.popBackStack() }
+            )
         }
-        composable(route = Screens.DescriptionScreen.route){
-            DescriptionScreen()
+        composable(route = Screens.DescriptionScreen.route + "/{meal}"){
+            DescriptionScreen(
+
+            )
         }
     }
 }
