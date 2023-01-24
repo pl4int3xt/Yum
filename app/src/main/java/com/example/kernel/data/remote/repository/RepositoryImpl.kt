@@ -22,12 +22,15 @@ class RepositoryImpl @Inject constructor(
     override suspend fun getMeals(category: String): MealDto {
         return httpClient.get {
             url(Constants.GET_MEALS_URL)
-            parameter(key = "C" , value = category)
+            parameter(key = "c" , value = category)
         }
     }
 
     override suspend fun getMealDetails(meal: String): MealDetailsDto {
-        TODO("Not yet implemented")
+        return httpClient.get {
+            url(Constants.GET_MEAL_DETAILS_URL)
+            parameter(key = "s" , value = meal)
+        }
     }
 
     override suspend fun searchMeal(searchWord: String): MealDetails {
