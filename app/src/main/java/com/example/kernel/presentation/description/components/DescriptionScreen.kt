@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -61,7 +62,7 @@ fun DescriptionScreen(
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                is UiEvent.PopBackStack -> { onPopBackStack() }
+                is UiEvent.PopBackStack -> onPopBackStack()
                 else -> Unit
             }
         }
@@ -84,7 +85,7 @@ fun DescriptionScreen(
             state.mealDetails?.let {
                 MainTopAppBar(
                     title = "",
-                    navigationIcon = Icons.Default.ArrowBackIos,
+                    navigationIcon = Icons.Default.ArrowBack,
                     onClickNavigation = { viewModel.onEvent(DescriptionScreenEvents.OnExitClicked) }) {
                 }
             }
