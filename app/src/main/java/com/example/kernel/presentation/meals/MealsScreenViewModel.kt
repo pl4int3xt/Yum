@@ -30,8 +30,8 @@ class MealsScreenViewModel @Inject constructor(
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    private val _state = mutableStateOf(HomeScreenState())
-    val state: State<HomeScreenState> = _state
+    private val _state = mutableStateOf(MealsScreenState())
+    val state: State<MealsScreenState> = _state
 
     init {
         category = savedStateHandle.get<String>("category")
@@ -42,20 +42,25 @@ class MealsScreenViewModel @Inject constructor(
         getMealsUseCase(category?:"").onEach { result ->
             when(result){
                 is Resource.Loading -> {
-                    _state.value = HomeScreenState(isLoading = true)
+                    _state.value = MealsScreenState(isLoading = true)
                 }
                 is Resource.Error -> {
-                    _state.value = HomeScreenState(error = result.message?:"unexpected error occurred")
+                    _state.value = MealsScreenState(error = result.message?:"unexpected error occurred")
+                    sendUiEvent(UiEvent.ShowToast(result.message?:"unexpected error occurred"))
                 }
                 is Resource.Success -> {
-                    _state.value = HomeScreenState(categories = result.data ?: emptyList())
+                    _state.value = MealsScreenState(meals = result.data ?: emptyList())
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun onEvent(homeScreenEvents: HomeScreenEvents){
-
+    fun onEvent(mealsScreenEvents: MealsScreenEvents){
+        when(mealsScreenEvents){
+            is MealsScreenEvents.OnBackClicked -> {
+                sendUiEvent(UiEvent.PopBackStack)
+            }
+        }
     }
 
     private fun sendUiEvent(uiEvent: UiEvent){

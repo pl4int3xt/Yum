@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 fun MainTopAppBar(
     title: String,
     navigationIcon: ImageVector,
-    actions: ImageVector,
+    actions: ImageVector? = null,
     onClickNavigation: () -> Unit,
     onClickAction: () -> Unit
 ) {
@@ -52,9 +52,11 @@ fun MainTopAppBar(
                         shape = CircleShape
                     ),
                 onClick = { onClickAction() }) {
-                Icon(
-                    tint = Color.Black,
-                    imageVector = actions, contentDescription = "")
+                if (actions != null) {
+                    Icon(
+                        tint = Color.Black,
+                        imageVector = actions, contentDescription = "")
+                }
             }
         },
         title = {

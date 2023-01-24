@@ -1,4 +1,5 @@
 package com.example.kernel.presentation.meals
 
-class MealsScreenEvents {
+sealed class MealsScreenEvents {
+    object OnBackClicked: MealsScreenEvents()
 }
