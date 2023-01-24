@@ -15,6 +15,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -34,11 +35,13 @@ fun CategoryCard(
         modifier = Modifier.clickable { onclick() }
             .fillMaxWidth()
             .height(200.dp)
+            .padding(20.dp)
             .background(
                 color = Color.LightGray,
                 shape = RoundedCornerShape(20.dp)
             )
-            .clip(shape = RoundedCornerShape(20.dp))
+            .clip(shape = RoundedCornerShape(20.dp)),
+        contentAlignment = Alignment.Center
     ){
         Column() {
             Text(
