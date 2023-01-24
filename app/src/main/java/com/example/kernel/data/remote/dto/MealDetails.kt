@@ -1,13 +1,18 @@
 package com.example.kernel.data.remote.dto
 
+import com.example.kernel.domain.model.MealDetailsModel
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class MealDetails(
-    val dateModified: Any,
+    @Contextual val dateModified: Any,
     val idMeal: String,
     val strArea: String,
     val strCategory: String,
-    val strCreativeCommonsConfirmed: Any,
-    val strDrinkAlternate: Any,
-    val strImageSource: Any,
+    @Contextual val strCreativeCommonsConfirmed: Any,
+    @Contextual val strDrinkAlternate: Any,
+    @Contextual val strImageSource: Any,
     val strIngredient1: String,
     val strIngredient10: String,
     val strIngredient11: String,
@@ -15,12 +20,12 @@ data class MealDetails(
     val strIngredient13: String,
     val strIngredient14: String,
     val strIngredient15: String,
-    val strIngredient16: Any,
-    val strIngredient17: Any,
-    val strIngredient18: Any,
-    val strIngredient19: Any,
+    @Contextual val strIngredient16: Any,
+    @Contextual val strIngredient17: Any,
+    @Contextual val strIngredient18: Any,
+    @Contextual val strIngredient19: Any,
     val strIngredient2: String,
-    val strIngredient20: Any,
+    @Contextual val strIngredient20: Any,
     val strIngredient3: String,
     val strIngredient4: String,
     val strIngredient5: String,
@@ -38,12 +43,12 @@ data class MealDetails(
     val strMeasure13: String,
     val strMeasure14: String,
     val strMeasure15: String,
-    val strMeasure16: Any,
-    val strMeasure17: Any,
-    val strMeasure18: Any,
-    val strMeasure19: Any,
+    @Contextual val strMeasure16: Any,
+    @Contextual val strMeasure17: Any,
+    @Contextual val strMeasure18: Any,
+    @Contextual val strMeasure19: Any,
     val strMeasure2: String,
-    val strMeasure20: Any,
+    @Contextual val strMeasure20: Any,
     val strMeasure3: String,
     val strMeasure4: String,
     val strMeasure5: String,
@@ -51,7 +56,34 @@ data class MealDetails(
     val strMeasure7: String,
     val strMeasure8: String,
     val strMeasure9: String,
-    val strSource: Any,
+    @Contextual val strSource: Any,
     val strTags: String,
     val strYoutube: String
 )
+
+fun MealDetails.toMealDetailsDto(): MealDetailsModel{
+    return MealDetailsModel(
+        name = strMeal,
+        id = idMeal,
+        area = strArea,
+        category = strCategory,
+        image = strImageSource,
+        ingredient1 = strIngredient1,
+        ingredient10 = strIngredient10,
+        ingredient11 = strIngredient11,
+        ingredient12 = strIngredient12,
+        ingredient13 = strIngredient13,
+        ingredient14 = strIngredient14,
+        ingredient15 = strIngredient15,
+        instructions = strInstructions,
+        measure1 = strMeasure1,
+        measure10 = strMeasure10,
+        measure11 = strMeasure11,
+        measure12 = strMeasure12,
+        measure13 = strMeasure13,
+        measure14 = strMeasure14,
+        measure15 = strMeasure15,
+        tags = strTags,
+        youtube = strYoutube
+    )
+}
