@@ -27,20 +27,20 @@ fun MainTopAppBar(
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = Color.Transparent,
-            titleContentColor = Color.White,
+            titleContentColor = Color.Black,
             navigationIconContentColor = Color.White
         ),
         navigationIcon = {
             IconButton(
                 modifier = Modifier
                     .background(
-                        color = Color.White,
+                        color = Color.Black,
                         shape = CircleShape
                     )
                 ,
                 onClick = { onClickNavigation() }) {
                 Icon(
-                    tint = Color.Black,
+                    tint = Color.White,
                     imageVector = navigationIcon, contentDescription = "")
             }
         },
@@ -48,12 +48,12 @@ fun MainTopAppBar(
             IconButton(
                 modifier = Modifier
                     .background(
-                        color = Color.White,
+                        color = Color.Black,
                         shape = CircleShape
                     ),
                 onClick = { onClickAction() }) {
                 Icon(
-                    tint = Color.Black,
+                    tint = Color.White,
                     imageVector = actions, contentDescription = "")
             }
         },

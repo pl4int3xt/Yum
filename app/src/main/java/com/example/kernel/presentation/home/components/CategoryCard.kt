@@ -43,11 +43,9 @@ fun CategoryCard(
             .clip(shape = RoundedCornerShape(20.dp)),
         contentAlignment = Alignment.Center
     ){
-        Column() {
-            Text(
-                text = name,
-            )
-        }
+        Text(
+            text = name,
+        )
         AsyncImage(model = image, contentDescription = "category image")
     }
 }
