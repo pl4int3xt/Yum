@@ -33,7 +33,7 @@ fun MainTopAppBar(
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = Color.Transparent,
-            titleContentColor = Color.White,
+            titleContentColor = Color.Black,
             navigationIconContentColor = Color.White
         ),
         navigationIcon = {
