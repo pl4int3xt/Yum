@@ -8,6 +8,6 @@ import com.example.kernel.data.remote.dto.MealDto
 interface RepositoryService {
     suspend fun getCategories(): CategoryDto
     suspend fun getMeals(category: String): MealDto
-    suspend fun getMealDetails(meal: String): MealDetailsDto
+    suspend fun getMealDetails(meal: String): MealDetails
     suspend fun searchMeal(searchWord: String): MealDetails
 }
