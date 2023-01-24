@@ -1,6 +1,5 @@
 package com.example.kernel.presentation.shared
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,10 +11,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -23,18 +21,15 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainTopAppBar(
+    scrollBehavior: TopAppBarScrollBehavior,
     title: String,
     navigationIcon: ImageVector,
     actions: ImageVector? = null,
     onClickNavigation: () -> Unit,
     onClickAction: () -> Unit
 ) {
-    val topAppBarState = rememberTopAppBarState()
     TopAppBar(
-        scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
-            state = topAppBarState,
-            canScroll = { true }
-        ),
+        scrollBehavior = scrollBehavior,
         modifier = Modifier.padding(5.dp),
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = Color.Transparent,

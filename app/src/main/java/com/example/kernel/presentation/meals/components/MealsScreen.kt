@@ -19,10 +19,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -47,6 +50,7 @@ fun MealsScreen(
 ) {
     val context = LocalContext.current
     val state = viewModel.state.value
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     LaunchedEffect(key1 = true){
         viewModel.uiEvent.onEach { event ->
@@ -78,11 +82,13 @@ fun MealsScreen(
     Scaffold(
         topBar = {
             MainTopAppBar(
+                scrollBehavior = scrollBehavior,
                 title = "Meals",
                 navigationIcon = Icons.Default.ArrowBack,
                 onClickNavigation = { viewModel.onEvent(MealsScreenEvents.OnBackClicked) }) {
             }
-        }
+        },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
         Box(
             modifier = Modifier

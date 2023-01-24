@@ -23,12 +23,15 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -51,6 +54,7 @@ fun DescriptionScreen(
 ) {
     val context = LocalContext.current
     val state = viewModel.state.value
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     LaunchedEffect(key1 = true){
         viewModel.uiEvent.onEach { event ->
@@ -84,12 +88,14 @@ fun DescriptionScreen(
         topBar = {
             state.mealDetails?.let {
                 MainTopAppBar(
+                    scrollBehavior = scrollBehavior,
                     title = "",
                     navigationIcon = Icons.Default.ArrowBack,
                     onClickNavigation = { viewModel.onEvent(DescriptionScreenEvents.OnExitClicked) }) {
                 }
             }
-        }
+        },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
         Box(
             modifier = Modifier
