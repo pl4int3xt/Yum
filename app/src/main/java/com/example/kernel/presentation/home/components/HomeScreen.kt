@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -102,13 +103,16 @@ fun HomeScreen(
                 }
                 item {
                     Text(
+                        modifier = Modifier.padding(5.dp),
                         text = "Find Best Recipe\nfor cooking",
                         fontWeight = FontWeight.Bold,
                         fontSize = 25.sp
                     )
                 }
                 item {
+                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
+                        modifier = Modifier.padding(5.dp),
                         text = "Categories",
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp
