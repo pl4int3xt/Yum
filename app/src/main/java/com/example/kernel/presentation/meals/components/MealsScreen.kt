@@ -93,7 +93,7 @@ fun MealsScreen(
             LazyColumn(){
                 item {
                     Column(
-                        modifier = Modifier.height(50.dp)
+                        modifier = Modifier.height(100.dp)
                     ) {
                         Text(text = "")
                     }

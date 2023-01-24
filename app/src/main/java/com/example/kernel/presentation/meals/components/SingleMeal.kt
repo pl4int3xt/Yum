@@ -25,7 +25,6 @@ fun SingleMeal(
     image: String,
     onclick: () -> Unit
 ) {
-    Divider()
     Column(
         modifier = Modifier
             .clickable {
@@ -42,7 +41,7 @@ fun SingleMeal(
             modifier = Modifier
                 .padding(5.dp)
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(200.dp)
                 .clip(shape = RoundedCornerShape(20.dp))
         )
         Spacer(modifier = Modifier.height(5.dp))
@@ -52,4 +51,5 @@ fun SingleMeal(
             fontWeight = FontWeight.Bold
         )
     }
+    Divider()
 }
