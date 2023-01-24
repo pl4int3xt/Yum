@@ -2,16 +2,20 @@ package com.example.kernel.presentation.shared
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -33,15 +37,24 @@ fun MainTopAppBar(
             navigationIconContentColor = Color.White
         ),
         navigationIcon = {
-            IconButton(
+            Button(
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 5.dp,
+                    pressedElevation = 5.dp,
+                    focusedElevation = 5.dp,
+                    hoveredElevation = 5.dp,
+                ),
                 modifier = Modifier
                     .background(
                         color = Color.White,
                         shape = CircleShape
                     )
-                    .shadow(elevation = 5.dp)
+                    .clip(CircleShape)
                 ,
-                onClick = { onClickNavigation() }) {
+                onClick = {
+                    onClickNavigation()
+                }
+            ){
                 Icon(
                     tint = Color.Black,
                     imageVector = navigationIcon, contentDescription = "")
@@ -49,13 +62,19 @@ fun MainTopAppBar(
         },
         actions = {
             if (actions != null) {
-                IconButton(
+                Button(
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 5.dp,
+                        pressedElevation = 5.dp,
+                        focusedElevation = 5.dp,
+                        hoveredElevation = 5.dp,
+                    ),
                     modifier = Modifier
                         .background(
                             color = Color.White,
                             shape = CircleShape
                         )
-                        .shadow(elevation = 5.dp)
+                        .clip(CircleShape)
                     ,
                     onClick = { onClickAction() }) {
                         Icon(
