@@ -82,7 +82,6 @@ fun HomeScreen(
             MainTopAppBar(
                 title = "Home",
                 navigationIcon = Icons.Default.Home,
-                actions = Icons.Default.Logout,
                 onClickNavigation = { /*TODO*/ }) {
             }
         }
