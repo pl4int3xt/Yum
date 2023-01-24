@@ -134,6 +134,7 @@ fun DescriptionScreen(
                                 fontSize = 20.sp
                             )
                         }
+                        Text(text = "Ingredients")
                         state.mealDetails?.let { it1 ->
                             Text(
                                 text = it1.ingredient1,

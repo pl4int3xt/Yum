@@ -35,7 +35,7 @@ fun MainTopAppBar(
         ),
         navigationIcon = {
             Button(
-                modifier = Modifier.padding(5.dp),
+                modifier = Modifier.padding(10.dp),
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
@@ -59,7 +59,7 @@ fun MainTopAppBar(
         actions = {
             if (actions != null) {
                 Button(
-                    modifier = Modifier.padding(5.dp),
+                    modifier = Modifier.padding(10.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.White,
                     ),
