@@ -53,7 +53,7 @@ fun MealsScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     LaunchedEffect(key1 = true){
-        viewModel.uiEvent.onEach { event ->
+        viewModel.uiEvent.collect { event ->
             when(event){
                 is UiEvent.ShowToast -> {
                     Toast.makeText(

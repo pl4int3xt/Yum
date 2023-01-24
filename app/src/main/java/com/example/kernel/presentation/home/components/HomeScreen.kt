@@ -58,7 +58,7 @@ fun HomeScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     LaunchedEffect(key1 = true, context){
-        viewModel.uiEvent.onEach {event ->
+        viewModel.uiEvent.collect {event ->
             when(event){
                 is UiEvent.ShowToast -> {
                     Toast.makeText(
