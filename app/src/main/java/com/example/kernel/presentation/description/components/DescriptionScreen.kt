@@ -74,10 +74,12 @@ fun DescriptionScreen(
 
     Scaffold(
         topBar = {
-            MainTopAppBar(
-                title = state.mealDetails!!.name,
-                navigationIcon = Icons.Default.ArrowBackIos,
-                onClickNavigation = { viewModel.onEvent(DescriptionScreenEvents.OnExitClicked) }) {
+            state.mealDetails?.let {
+                MainTopAppBar(
+                    title = it.name,
+                    navigationIcon = Icons.Default.ArrowBackIos,
+                    onClickNavigation = { viewModel.onEvent(DescriptionScreenEvents.OnExitClicked) }) {
+                }
             }
         }
     ) {
@@ -105,16 +107,20 @@ fun DescriptionScreen(
                 }
                 item {
                     Column() {
-                        Text(
-                            text = state.mealDetails!!.category,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
-                        Text(
-                            text = state.mealDetails.area,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.category,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            )
+                        }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.area,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            )
+                        }
                     }
                 }
             }

@@ -12,8 +12,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,6 +39,7 @@ fun MainTopAppBar(
                         color = Color.White,
                         shape = CircleShape
                     )
+                    .shadow(elevation = 5.dp)
                 ,
                 onClick = { onClickNavigation() }) {
                 Icon(
@@ -45,17 +48,19 @@ fun MainTopAppBar(
             }
         },
         actions = {
-            IconButton(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = CircleShape
-                    ),
-                onClick = { onClickAction() }) {
-                if (actions != null) {
-                    Icon(
-                        tint = Color.Black,
-                        imageVector = actions, contentDescription = "")
+            if (actions != null) {
+                IconButton(
+                    modifier = Modifier
+                        .background(
+                            color = Color.White,
+                            shape = CircleShape
+                        )
+                        .shadow(elevation = 5.dp)
+                    ,
+                    onClick = { onClickAction() }) {
+                        Icon(
+                            tint = Color.Black,
+                            imageVector = actions, contentDescription = "")
                 }
             }
         },
