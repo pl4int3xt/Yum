@@ -66,9 +66,7 @@ fun HomeScreen(
                 .pullRefresh(pullRefreshState)
                 .fillMaxHeight(1f)
         ) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2)
-            ){
+            LazyColumn(){
                 item {
 
                 }
@@ -81,8 +79,8 @@ fun HomeScreen(
                 items(state.categories.size){ i ->
                     CategoryCard(
                         name = state.categories[i].name,
-                        image = state.categories[i].thumb,
-                        description = state.categories[i].description) {
+                        image = state.categories[i].thumb,)
+                    {
                     }
                 }
             }
