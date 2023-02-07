@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.navigation.compose.rememberNavController
 import com.example.kernel.presentation.navigation.MainNavGraph
 import com.example.kernel.presentation.ui.theme.KernelTheme
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
