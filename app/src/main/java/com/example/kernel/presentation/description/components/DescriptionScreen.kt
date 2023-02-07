@@ -154,6 +154,74 @@ fun DescriptionScreen(
                                 fontWeight = FontWeight.Bold,
                             )
                         }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.ingredient11,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.ingredient12,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.ingredient13,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.ingredient14,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.ingredient15,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        Text(text = "Measures")
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.measure1,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.measure10,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.measure11,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.measure12,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.measure13,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                        Text(text = "Instructions")
+                        state.mealDetails?.let { it1 ->
+                            Text(
+                                text = it1.instructions,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
                     }
                 }
             }
