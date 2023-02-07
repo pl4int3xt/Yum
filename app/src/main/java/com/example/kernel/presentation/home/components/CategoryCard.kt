@@ -38,6 +38,7 @@ fun CategoryCard(
             alignment = Alignment.Center,
             modifier = Modifier.fillMaxHeight(0.8f)
                 .fillMaxWidth()
+                .padding(5.dp)
             ,
             model = image,
             contentDescription = "category image")
