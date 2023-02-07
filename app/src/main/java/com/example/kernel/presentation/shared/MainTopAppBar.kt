@@ -33,7 +33,6 @@ fun MainTopAppBar(
         modifier = Modifier.padding(5.dp),
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = Color.Transparent,
-            titleContentColor = Color.Black,
             navigationIconContentColor = Color.White
         ),
         navigationIcon = {
