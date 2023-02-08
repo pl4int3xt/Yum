@@ -33,7 +33,7 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun searchMeal(searchQuery: String): MealDetails {
+    override suspend fun searchMeal(searchQuery: String): MealDto {
         return httpClient.get{
             url(Constants.GET_MEAL_DETAILS_URL)
             parameter(key = "f" , value = searchQuery)

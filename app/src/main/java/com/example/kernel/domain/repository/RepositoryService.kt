@@ -9,5 +9,5 @@ interface RepositoryService {
     suspend fun getCategories(): CategoryDto
     suspend fun getMeals(category: String): MealDto
     suspend fun getMealDetails(meal: String): MealDetailsDto
-    suspend fun searchMeal(searchWord: String): MealDetails
+    suspend fun searchMeal(searchQuery: String): MealDto
 }
