@@ -68,6 +68,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.LottieAnimation
@@ -95,7 +96,6 @@ fun HomeScreen(
     val state = viewModel.state.value
     val areasState = viewModel.areasState.value
     val mealState = viewModel.mealState.value
-    var showMenu by remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -125,80 +125,79 @@ fun HomeScreen(
                 alignment = Alignment.Center
             )
         } else {
-            Column() {
-                Spacer(modifier = Modifier.height(20.dp))
-                Row(
-                    modifier = Modifier
-                        .padding(20.dp)
-                        .fillMaxWidth()
-                ) {
-                    Spacer(modifier = Modifier.weight(1f))
-                    Card(
-                        modifier = Modifier.padding(20.dp),
-                        onClick = { showMenu = !showMenu },
-                        elevation = CardDefaults.cardElevation(
-                            defaultElevation = 20.dp
-                        )
-                    ) {
-                        Icon(
-                            modifier = Modifier.padding(10.dp),
-                            imageVector = Icons.Default.FilterList,
-                            contentDescription = "filter list"
-                        )
-                        DropdownMenu(
-                            expanded = true,
-                            onDismissRequest = { showMenu = false }) {
-                            areasState.areas.forEach { areaModel ->
-                                DropdownMenuItem(
-                                    onClick = {
-                                        viewModel.onEvent(HomeScreenEvents.OnFilterTypeClicked(areaModel.area))
-                                        showMenu = false
-                                    },
-                                    text = { Text(text = areaModel.area)}
-                                )
+            Box {
+                if (viewModel.showDialog){
+                    Dialog(onDismissRequest = { viewModel.showDialog = false }) {
+                        LazyColumn(){
+                            items(areasState.areas){
+                                Text(text = it.area)
                             }
                         }
                     }
                 }
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(150.dp)
-                ){
-                    items(state.categories.size) { i ->
-                        CategoryCard(
-                            name = state.categories[i].name,
-                            image = state.categories[i].thumb,
-                            onclick = {
-                                viewModel.onEvent(HomeScreenEvents.OnCategoryClicked(state.categories[i].name))
-                            }
-                        )
+                Column() {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Row(
+                        modifier = Modifier
+                            .padding(20.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Spacer(modifier = Modifier.weight(1f))
+                        Card(
+                            modifier = Modifier.padding(20.dp),
+                            onClick = { viewModel.showDialog = !viewModel.showDialog },
+                            elevation = CardDefaults.cardElevation(
+                                defaultElevation = 20.dp
+                            )
+                        ) {
+                            Icon(
+                                modifier = Modifier.padding(10.dp),
+                                imageVector = Icons.Default.FilterList,
+                                contentDescription = "filter list"
+                            )
+                        }
                     }
-                }
-                Box{
-                    if (mealState.isLoading){
-                        val lottieCompositionSpec by rememberLottieComposition(
-                            spec = LottieCompositionSpec.RawRes(R.raw.loading)
-                        )
-                        LottieAnimation(
-                            composition = lottieCompositionSpec,
-                            iterations = Int.MAX_VALUE,
-                            alignment = Alignment.Center
-                        )
-                    } else {
-                        LazyColumn(){
-                            items(mealState.meals.size){ i ->
-                                SingleMeal(
-                                    name = mealState.meals[i].name,
-                                    image = mealState.meals[i].thumb,
-                                    onclick = {
-                                        navHostController.navigate(
-                                            Screens.DescriptionScreen.route + "/${mealState.meals[i].name}")
-                                    }
-                                )
-                            }
-                            item { 
-                                Spacer(modifier = Modifier.height(100.dp))
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(150.dp)
+                    ) {
+                        items(state.categories.size) { i ->
+                            CategoryCard(
+                                name = state.categories[i].name,
+                                image = state.categories[i].thumb,
+                                onclick = {
+                                    viewModel.onEvent(HomeScreenEvents.OnCategoryClicked(state.categories[i].name))
+                                }
+                            )
+                        }
+                    }
+                    Box {
+                        if (mealState.isLoading) {
+                            val lottieCompositionSpec by rememberLottieComposition(
+                                spec = LottieCompositionSpec.RawRes(R.raw.loading)
+                            )
+                            LottieAnimation(
+                                composition = lottieCompositionSpec,
+                                iterations = Int.MAX_VALUE,
+                                alignment = Alignment.Center
+                            )
+                        } else {
+                            LazyColumn() {
+                                items(mealState.meals.size) { i ->
+                                    SingleMeal(
+                                        name = mealState.meals[i].name,
+                                        image = mealState.meals[i].thumb,
+                                        onclick = {
+                                            navHostController.navigate(
+                                                Screens.DescriptionScreen.route + "/${mealState.meals[i].name}"
+                                            )
+                                        }
+                                    )
+                                }
+                                item {
+                                    Spacer(modifier = Modifier.height(100.dp))
+                                }
                             }
                         }
                     }

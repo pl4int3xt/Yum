@@ -30,7 +30,8 @@ class HomeScreenViewModel @Inject constructor(
     private val getMealsByAreaUseCase: GetMealsByAreaUseCase
 ):ViewModel() {
 
-    var area by mutableStateOf("")
+    var showDialog by mutableStateOf(false)
+    var area by mutableStateOf("list")
     var category by mutableStateOf("beef")
     var searchQuery by mutableStateOf("")
 
