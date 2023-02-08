@@ -50,7 +50,7 @@ import com.example.kernel.presentation.screen.Screens
 import com.example.kernel.presentation.uievents.UiEvent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class,
+@OptIn(ExperimentalMaterial3Api::class,
     ExperimentalComposeUiApi::class
 )
 @Composable
