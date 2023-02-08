@@ -131,25 +131,42 @@ fun HomeScreen(
                         onDismissRequest = { viewModel.showDialog = false }
                     ) {
                         Card(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .height(500.dp)
                                 .padding(20.dp)
                             ,
                             onClick = { /*TODO*/ }) {
-                            LazyColumn(){
-                                items(areasState.areas){
-                                    Text(
-                                        fontSize = 20.sp,
-                                        textAlign = TextAlign.Center,
-                                        modifier = Modifier.fillMaxWidth()
-                                            .padding(10.dp)
-                                            .clickable{
-                                                viewModel.showDialog = false
-                                                viewModel.onEvent(HomeScreenEvents.OnFilterTypeClicked(it.area))
-                                            }
-                                        ,
-                                        text = it.area
+                            Box() {
+                                if (areasState.isLoading){
+                                    val lottieCompositionSpec by rememberLottieComposition(
+                                        spec = LottieCompositionSpec.RawRes(R.raw.loading)
                                     )
+                                    LottieAnimation(
+                                        composition = lottieCompositionSpec,
+                                        iterations = Int.MAX_VALUE,
+                                        alignment = Alignment.Center
+                                    )
+                                }
+                                LazyColumn(){
+                                    items(areasState.areas){
+                                        Text(
+                                            fontSize = 20.sp,
+                                            textAlign = TextAlign.Center,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .clickable {
+                                                    viewModel.showDialog = false
+                                                    viewModel.onEvent(
+                                                        HomeScreenEvents.OnFilterTypeClicked(
+                                                            it.area
+                                                        )
+                                                    )
+                                                }
+                                            ,
+                                            text = it.area
+                                        )
+                                    }
                                 }
                             }
                         }
