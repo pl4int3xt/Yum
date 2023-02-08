@@ -145,7 +145,9 @@ fun HomeScreen(
                         Spacer(modifier = Modifier.weight(1f))
                         Card(
                             modifier = Modifier.padding(20.dp),
-                            onClick = { viewModel.showDialog = !viewModel.showDialog },
+                            onClick = {
+                                viewModel.showDialog = !viewModel.showDialog
+                                viewModel.onEvent(HomeScreenEvents.OnFilterClicked) },
                             elevation = CardDefaults.cardElevation(
                                 defaultElevation = 20.dp
                             )
