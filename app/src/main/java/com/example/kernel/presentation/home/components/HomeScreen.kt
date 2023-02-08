@@ -138,7 +138,18 @@ fun HomeScreen(
                             onClick = { /*TODO*/ }) {
                             LazyColumn(){
                                 items(areasState.areas){
-                                    Text(text = it.area)
+                                    Text(
+                                        fontSize = 20.sp,
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.fillMaxWidth()
+                                            .padding(10.dp)
+                                            .clickable{
+                                                viewModel.showDialog = false
+                                                viewModel.onEvent(HomeScreenEvents.OnFilterTypeClicked(it.area))
+                                            }
+                                        ,
+                                        text = it.area
+                                    )
                                 }
                             }
                         }
