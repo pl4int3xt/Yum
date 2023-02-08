@@ -33,6 +33,8 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -123,23 +125,29 @@ fun HomeScreen(
             Column() {
                 Spacer(modifier = Modifier.height(20.dp))
                 Row(
-                    modifier = Modifier.padding(20.dp)
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .fillMaxWidth()
                 ) {
                     Spacer(modifier = Modifier.weight(1f))
-                    Box(modifier = Modifier.weight(1f)) {
-                        IconButton(onClick = { showMenu = !showMenu }) {
-                            Icon(
-                                imageVector = Icons.Default.FilterList,
-                                contentDescription = "filter list"
+                    Card(
+                        modifier = Modifier.weight(1f),
+                        onClick = { showMenu = !showMenu },
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 20.dp
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.FilterList,
+                            contentDescription = "filter list"
+                        )
+                        DropdownMenu(
+                            expanded = showMenu,
+                            onDismissRequest = { showMenu = false }) {
+                            DropdownMenuItem(
+                                onClick = { },
+                                text = { Text(text = "none")}
                             )
-                            DropdownMenu(
-                                expanded = showMenu,
-                                onDismissRequest = { showMenu = false }) {
-                                DropdownMenuItem(
-                                    onClick = { },
-                                    text = { Text(text = "none")}
-                                )
-                            }
                         }
                     }
                 }
