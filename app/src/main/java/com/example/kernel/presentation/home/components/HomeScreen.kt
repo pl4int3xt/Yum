@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -72,17 +74,6 @@ fun HomeScreen(
         }
     }
 
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = state.isLoading, onRefresh = {
-            viewModel.getCategories()
-        }
-    )
-
-    PullRefreshIndicator(
-        refreshing = state.isLoading,
-        state = pullRefreshState,
-        contentColor = MaterialTheme.colorScheme.primary
-    )
     Scaffold(
         topBar = {
             MainTopAppBar(
@@ -92,56 +83,55 @@ fun HomeScreen(
                 onClickNavigation = { /*TODO*/ }) {
             }
         },
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .pullRefresh(pullRefreshState)
-                .fillMaxHeight(1f)
-        ) {
-            LazyColumn(){
-                item {
-                    Column(
-                        modifier = Modifier.height(100.dp)
-                    ) {
+        Box {
+            Column() {
+                LazyColumn() {
+                    item {
+                        Column(
+                            modifier = Modifier.height(100.dp)
+                        ) {
 
+                        }
+                    }
+                    item {
+                        Text(
+                            modifier = Modifier.padding(5.dp),
+                            text = "Find Best Recipe\nfor cooking",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 25.sp
+                        )
+                    }
+                    item {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(
+                            modifier = Modifier.padding(5.dp),
+                            text = "Categories",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp
+                        )
                     }
                 }
-                item {
-                    Text(
-                        modifier = Modifier.padding(5.dp),
-                        text = "Find Best Recipe\nfor cooking",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 25.sp
-                    )
-                }
-                item {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        modifier = Modifier.padding(5.dp),
-                        text = "Categories",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp
-                    )
-                }
-                items(state.categories.size){ i ->
-                    CategoryCard(
-                        name = state.categories[i].name,
-                        image = state.categories[i].thumb,
-                        onclick = {
-                            navHostController.navigate(
-                                Screens.MealsScreen.route + "/${state.categories[i].name}")
-                        }
-                    )
+                LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+                    items(state.categories.size) { i ->
+                        CategoryCard(
+                            name = state.categories[i].name,
+                            image = state.categories[i].thumb,
+                            onclick = {
+                                navHostController.navigate(
+                                    Screens.MealsScreen.route + "/${state.categories[i].name}"
+                                )
+                            }
+                        )
+                    }
                 }
             }
-            PullRefreshIndicator(
-                refreshing = state.isLoading,
-                contentColor = MaterialTheme.colorScheme.primary,
-                state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
-            )
+            if (state.isLoading){
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
+                        .fillMaxSize()
+                )
+            }
         }
     }
 }
