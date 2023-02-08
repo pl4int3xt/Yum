@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.Card
@@ -148,6 +147,11 @@ fun HomeScreen(
                             .padding(20.dp)
                             .fillMaxWidth()
                     ) {
+                        Text(
+                            text = "Yum",
+                            fontSize = 35.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                         Spacer(modifier = Modifier.weight(1f))
                         Card(
                             modifier = Modifier.padding(20.dp),
