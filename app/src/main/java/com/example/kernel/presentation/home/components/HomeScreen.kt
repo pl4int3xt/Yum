@@ -146,9 +146,9 @@ fun HomeScreen(
                             contentDescription = "filter list"
                         )
                         DropdownMenu(
-                            expanded = showMenu,
+                            expanded = true,
                             onDismissRequest = { showMenu = false }) {
-                            areasState.areas.forEachIndexed { index, areaModel ->
+                            areasState.areas.forEach { areaModel ->
                                 DropdownMenuItem(
                                     onClick = {
                                         viewModel.onEvent(HomeScreenEvents.OnFilterTypeClicked(areaModel.area))
