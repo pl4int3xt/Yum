@@ -113,6 +113,7 @@ fun HomeScreen(
             )
         } else {
             Column() {
+                Spacer(modifier = Modifier.height(20.dp))
                 TextField(
                     colors = TextFieldDefaults.textFieldColors(
                         textColor = MaterialTheme.colorScheme.tertiary,
