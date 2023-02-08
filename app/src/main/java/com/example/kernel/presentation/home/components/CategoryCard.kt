@@ -1,9 +1,12 @@
 package com.example.kernel.presentation.home.components
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -25,32 +28,38 @@ fun CategoryCard(
     image: String,
     onclick: () -> Unit
 ) {
-    ElevatedCard(
-        modifier = Modifier
-            .fillMaxWidth(0.5f)
-            .height(200.dp)
-            .padding(20.dp)
-            .clip(RoundedCornerShape(10.dp))
-        ,
-        shape = RoundedCornerShape(10.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 10.dp,
-            pressedElevation = 0.dp
-        ),
-        onClick = { onclick() },
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary
-        )
-    ){
-        AsyncImage(
-            alignment = Alignment.Center,
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        ElevatedCard(
             modifier = Modifier
-                .fillMaxHeight(0.8f)
-                .fillMaxWidth()
-                .padding(10.dp)
+                .width(100.dp)
+                .height(100.dp)
+                .padding(20.dp)
+                .clip(RoundedCornerShape(10.dp))
             ,
-            model = image,
-            contentDescription = "category image")
+            shape = RoundedCornerShape(10.dp),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 10.dp,
+                pressedElevation = 0.dp
+            ),
+            onClick = { onclick() },
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        ){
+            AsyncImage(
+                alignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxHeight(0.8f)
+                    .fillMaxWidth()
+                    .padding(10.dp)
+                ,
+                model = image,
+                contentDescription = "category image"
+            )
+        }
         Text(
             textAlign = TextAlign.Center,
             modifier = Modifier

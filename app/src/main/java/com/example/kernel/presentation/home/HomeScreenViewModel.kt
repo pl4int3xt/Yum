@@ -1,7 +1,9 @@
 package com.example.kernel.presentation.home
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kernel.common.Resource
@@ -19,6 +21,9 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase
 ):ViewModel() {
+
+    var searchQuery by mutableStateOf("")
+
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
@@ -47,7 +52,20 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     fun onEvent(homeScreenEvents: HomeScreenEvents){
+        when(homeScreenEvents){
+            is HomeScreenEvents.OnSearchTextChanged -> {
+                searchQuery = homeScreenEvents.searchQuery
+            }
+            is HomeScreenEvents.OnExitClicked -> {
 
+            }
+            is HomeScreenEvents.OnCancelClicked -> {
+
+            }
+            is HomeScreenEvents.OnSearchClicked -> {
+
+            }
+        }
     }
 
     private fun sendUiEvent(uiEvent: UiEvent){
