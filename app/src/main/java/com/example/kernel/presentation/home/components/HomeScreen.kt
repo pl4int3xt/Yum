@@ -148,10 +148,13 @@ fun HomeScreen(
                                         alignment = Alignment.Center
                                     )
                                 }
-                                LazyColumn(){
+                                LazyColumn(
+                                    modifier = Modifier.padding(5.dp)
+                                ){
                                     items(areasState.areas){
                                         Text(
-                                            fontSize = 20.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 35.sp,
                                             textAlign = TextAlign.Center,
                                             modifier = Modifier
                                                 .fillMaxWidth()
