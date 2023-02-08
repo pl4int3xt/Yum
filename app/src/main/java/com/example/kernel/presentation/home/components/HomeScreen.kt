@@ -131,7 +131,7 @@ fun HomeScreen(
                 ) {
                     Spacer(modifier = Modifier.weight(1f))
                     Card(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.padding(20.dp),
                         onClick = { showMenu = !showMenu },
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 20.dp
