@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,6 +28,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +41,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.kernel.R
 import com.example.kernel.presentation.description.DescriptionScreenEvents
 import com.example.kernel.presentation.description.DescriptionScreenViewModel
 import com.example.kernel.presentation.shared.MainTopAppBar
@@ -46,7 +52,7 @@ import com.example.kernel.presentation.uievents.UiEvent
 import kotlinx.coroutines.flow.onEach
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DescriptionScreen(
     onPopBackStack: () -> Unit,
@@ -71,19 +77,7 @@ fun DescriptionScreen(
             }
         }
     }
-
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = state.isLoading, onRefresh = {
-            viewModel.getMealDetails(viewModel.meal)
-        }
-    )
-
-    PullRefreshIndicator(
-        refreshing = state.isLoading,
-        state = pullRefreshState,
-        contentColor = MaterialTheme.colorScheme.primary
-    )
-
+    
     Scaffold(
         topBar = {
             state.mealDetails?.let {
@@ -95,14 +89,17 @@ fun DescriptionScreen(
                 }
             }
         },
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .pullRefresh(pullRefreshState)
-                .fillMaxHeight(1f)
-        ) {
+        if (state.isLoading){
+            val lottieCompositionSpec by rememberLottieComposition(
+                spec = LottieCompositionSpec.RawRes(R.raw.loading)
+            )
+            LottieAnimation(
+                composition = lottieCompositionSpec,
+                iterations = Int.MAX_VALUE,
+                alignment = Alignment.Center
+            )
+        } else {
             LazyColumn(){
                 item {
                     Box (
@@ -112,13 +109,12 @@ fun DescriptionScreen(
                         contentAlignment = Alignment.Center
                     ){
                         AsyncImage(
-                            contentScale = ContentScale.FillBounds,
+                            contentScale = ContentScale.Crop,
                             model = state.mealDetails?.image, contentDescription = "image")
                     }
                 }
                 item {
                     Column(
-                        modifier = Modifier.padding(5.dp)
                     ) {
                         state.mealDetails?.let { it1 ->
                             Text(
@@ -141,7 +137,11 @@ fun DescriptionScreen(
                                 fontSize = 20.sp
                             )
                         }
-                        Text(text = "Ingredients")
+                        Text(
+                            text = "Ingredients",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp
+                        )
                         state.mealDetails?.let { it1 ->
                             Text(
                                 text = it1.ingredient1,
@@ -184,7 +184,11 @@ fun DescriptionScreen(
                                 fontWeight = FontWeight.Bold,
                             )
                         }
-                        Text(text = "Measures")
+                        Text(
+                            text = "Measures",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp
+                        )
                         state.mealDetails?.let { it1 ->
                             Text(
                                 text = it1.measure1,
@@ -215,7 +219,11 @@ fun DescriptionScreen(
                                 fontWeight = FontWeight.Bold,
                             )
                         }
-                        Text(text = "Instructions")
+                        Text(
+                            text = "Instructions",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp
+                        )
                         state.mealDetails?.let { it1 ->
                             Text(
                                 text = it1.instructions,
@@ -224,13 +232,10 @@ fun DescriptionScreen(
                         }
                     }
                 }
+                item { 
+                    Spacer(modifier = Modifier.height(100.dp))
+                }
             }
-            PullRefreshIndicator(
-                refreshing = state.isLoading,
-                contentColor = MaterialTheme.colorScheme.primary,
-                state = pullRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
-            )
         }
     }
 }
