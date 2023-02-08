@@ -116,8 +116,9 @@ fun DescriptionScreen(
                             }
                     ){
                         AsyncImage(
-                            contentScale = ContentScale.Crop,
-                            model = state.mealDetails?.image, contentDescription = "image")
+                            contentScale = ContentScale.FillBounds,
+                            model = state.mealDetails?.image,
+                            contentDescription = "image")
                     }
                     Column(
                         modifier = Modifier
