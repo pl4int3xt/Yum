@@ -149,7 +149,7 @@ fun HomeScreen(
                                     )
                                 }
                                 LazyColumn(
-                                    modifier = Modifier.padding(5.dp)
+                                    modifier = Modifier.padding(vertical = 10.dp)
                                 ){
                                     items(areasState.areas){
                                         Text(
