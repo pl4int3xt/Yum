@@ -130,7 +130,12 @@ fun HomeScreen(
                     Dialog(
                         onDismissRequest = { viewModel.showDialog = false }
                     ) {
-                        Card(onClick = { /*TODO*/ }) {
+                        Card(
+                            modifier = Modifier.fillMaxWidth()
+                                .height(500.dp)
+                                .padding(20.dp)
+                            ,
+                            onClick = { /*TODO*/ }) {
                             LazyColumn(){
                                 items(areasState.areas){
                                     Text(text = it.area)
