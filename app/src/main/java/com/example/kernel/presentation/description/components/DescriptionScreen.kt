@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -33,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -60,7 +64,7 @@ fun DescriptionScreen(
 ) {
     val context = LocalContext.current
     val state = viewModel.state.value
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val scrollState = rememberScrollState()
 
     LaunchedEffect(key1 = true){
         viewModel.uiEvent.collect { event ->
@@ -82,7 +86,6 @@ fun DescriptionScreen(
         topBar = {
             state.mealDetails?.let {
                 MainTopAppBar(
-                    scrollBehavior = scrollBehavior,
                     title = "",
                     navigationIcon = Icons.Default.ArrowBack,
                     onClickNavigation = { viewModel.onEvent(DescriptionScreenEvents.OnExitClicked) }) {
@@ -100,140 +103,152 @@ fun DescriptionScreen(
                 alignment = Alignment.Center
             )
         } else {
-            LazyColumn(){
-                item {
+            Box{
+                Column(
+                    modifier = Modifier.verticalScroll(scrollState)
+                ) {
                     Box (
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(300.dp),
-                        contentAlignment = Alignment.Center
+                            .height(300.dp)
+                            .graphicsLayer {
+                                translationY = 0.4f * scrollState.value
+                            }
                     ){
                         AsyncImage(
                             contentScale = ContentScale.Crop,
                             model = state.mealDetails?.image, contentDescription = "image")
                     }
-                }
-                item {
                     Column(
+                        modifier = Modifier
+                            .background(
+                                color = if (isSystemInDarkTheme()) Color.Black else Color.White
+                            )
                     ) {
-                        state.mealDetails?.let { it1 ->
+                        Column(
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .background(
+                                    color = if (isSystemInDarkTheme()) Color.Black else Color.White
+                                )
+                        ) {
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.name,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 20.sp
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.category,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 20.sp
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.area,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 20.sp
+                                )
+                            }
                             Text(
-                                text = it1.name,
+                                text = "Ingredients",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 20.sp
                             )
-                        }
-                        state.mealDetails?.let { it1 ->
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.ingredient1,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.ingredient10,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.ingredient11,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.ingredient12,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.ingredient13,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.ingredient14,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.ingredient15,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
                             Text(
-                                text = it1.category,
+                                text = "Measures",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 20.sp
                             )
-                        }
-                        state.mealDetails?.let { it1 ->
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.measure1,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.measure10,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.measure11,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.measure12,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.measure13,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
                             Text(
-                                text = it1.area,
+                                text = "Instructions",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 20.sp
                             )
-                        }
-                        Text(
-                            text = "Ingredients",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.ingredient1,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.ingredient10,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.ingredient11,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.ingredient12,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.ingredient13,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.ingredient14,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.ingredient15,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        Text(
-                            text = "Measures",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.measure1,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.measure10,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.measure11,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.measure12,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.measure13,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        }
-                        Text(
-                            text = "Instructions",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
-                        state.mealDetails?.let { it1 ->
-                            Text(
-                                text = it1.instructions,
-                                fontWeight = FontWeight.Bold,
-                            )
+                            state.mealDetails?.let { it1 ->
+                                Text(
+                                    text = it1.instructions,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(100.dp))
                         }
                     }
-                }
-                item { 
-                    Spacer(modifier = Modifier.height(100.dp))
                 }
             }
         }
