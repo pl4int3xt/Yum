@@ -12,4 +12,5 @@ interface RepositoryService {
     suspend fun getMealDetails(meal: String): MealDetailsDto
     suspend fun searchMeal(searchQuery: String): MealDto
     suspend fun getAreas(area: String): AreaDto
+    suspend fun getMealsByArea(area: String): MealDto
 }

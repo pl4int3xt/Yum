@@ -2,6 +2,7 @@ package com.example.kernel.presentation.home.components
 
 import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -92,6 +93,7 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     val state = viewModel.state.value
+    val areasState = viewModel.areasState.value
     val mealState = viewModel.mealState.value
     var showMenu by remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
@@ -139,23 +141,22 @@ fun HomeScreen(
                         )
                     ) {
                         Icon(
-                            modifier = Modifier.size(50.dp),
+                            modifier = Modifier.padding(10.dp),
                             imageVector = Icons.Default.FilterList,
                             contentDescription = "filter list"
                         )
                         DropdownMenu(
                             expanded = showMenu,
                             onDismissRequest = { showMenu = false }) {
-                            DropdownMenuItem(
-                                onClick = { },
-                                text = {
-                                    LazyColumn(){
-                                        items(state.categories.size){
-                                            Text(text = state.categories[it].name)
-                                        }
-                                    }
-                                }
-                            )
+                            areasState.areas.forEachIndexed { index, areaModel ->
+                                DropdownMenuItem(
+                                    onClick = {
+                                        viewModel.onEvent(HomeScreenEvents.OnFilterTypeClicked(areaModel.area))
+                                        showMenu = false
+                                    },
+                                    text = { Text(text = areaModel.area)}
+                                )
+                            }
                         }
                     }
                 }

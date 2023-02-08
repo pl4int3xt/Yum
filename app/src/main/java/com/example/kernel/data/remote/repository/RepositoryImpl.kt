@@ -47,4 +47,11 @@ class RepositoryImpl @Inject constructor(
             parameter(key = "a" , value = area)
         }
     }
+
+    override suspend fun getMealsByArea(area: String): MealDto {
+        return httpClient.get{
+            url(Constants.GET_MEALS_BY_AREA)
+            parameter(key = "a", value = area)
+        }
+    }
 }

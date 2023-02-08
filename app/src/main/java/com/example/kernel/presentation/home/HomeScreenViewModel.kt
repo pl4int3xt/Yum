@@ -7,7 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kernel.common.Resource
+import com.example.kernel.domain.use_cases.GetAreasUseCase
 import com.example.kernel.domain.use_cases.GetCategoriesUseCase
+import com.example.kernel.domain.use_cases.GetMealsByAreaUseCase
 import com.example.kernel.domain.use_cases.GetMealsUseCase
 import com.example.kernel.domain.use_cases.SearchMealUseCase
 import com.example.kernel.presentation.uievents.UiEvent
@@ -23,10 +25,13 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getMealsUseCase: GetMealsUseCase,
-    private val searchMealUseCase: SearchMealUseCase
+    private val searchMealUseCase: SearchMealUseCase,
+    private val getAreasUseCase: GetAreasUseCase,
+    private val getMealsByAreaUseCase: GetMealsByAreaUseCase
 ):ViewModel() {
-    var category by mutableStateOf("beef")
 
+    var area by mutableStateOf("")
+    var category by mutableStateOf("beef")
     var searchQuery by mutableStateOf("")
 
     private val _uiEvent = Channel<UiEvent>()
@@ -37,6 +42,9 @@ class HomeScreenViewModel @Inject constructor(
 
     private val _mealState = mutableStateOf(MealsState())
     val mealState: State<MealsState> = _mealState
+
+    private val _areaState = mutableStateOf(AreasState())
+    val areasState: State<AreasState> = _areaState
     init {
         getCategories()
         getMeals(category)
@@ -58,6 +66,22 @@ class HomeScreenViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    private fun getMealsByArea(area: String){
+        getMealsByAreaUseCase(area).onEach { result ->
+            when(result){
+                is Resource.Loading -> {
+                    _mealState.value = MealsState(isLoading = true)
+                }
+                is Resource.Error -> {
+                    _mealState.value = MealsState(error = result.message?:"unexpected error occurred")
+                    sendUiEvent(UiEvent.ShowToast(result.message?:"unexpected error occurred"))
+                }
+                is Resource.Success -> {
+                    _mealState.value = MealsState(meals = result.data ?: emptyList())
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
     private fun getMeals(category: String?){
         getMealsUseCase(category?:"").onEach { result ->
             when(result){
@@ -75,7 +99,7 @@ class HomeScreenViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun searchMeal(searchQuery: String){
+    private fun searchMeal(searchQuery: String){
         searchMealUseCase(searchQuery).onEach { result ->
             when(result){
                 is Resource.Loading -> {
@@ -87,6 +111,23 @@ class HomeScreenViewModel @Inject constructor(
                 }
                 is Resource.Success -> {
                     _mealState.value = MealsState(meals = result.data ?: emptyList())
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun getAreas(){
+        getAreasUseCase(area).onEach { result ->
+            when(result){
+                is Resource.Loading -> {
+                    _areaState.value = AreasState(isLoading = true)
+                }
+                is Resource.Error -> {
+                    _areaState.value = AreasState(error = result.message?:"unexpected error occurred")
+                    sendUiEvent(UiEvent.ShowToast(result.message?:"unexpected error occurred"))
+                }
+                is Resource.Success -> {
+                    _areaState.value = AreasState(areas = result.data ?: emptyList())
                 }
             }
         }.launchIn(viewModelScope)
@@ -105,6 +146,13 @@ class HomeScreenViewModel @Inject constructor(
             is HomeScreenEvents.OnCategoryClicked -> {
                 category = homeScreenEvents.category
                 getMeals(category)
+            }
+            is HomeScreenEvents.OnFilterClicked -> {
+                getAreas()
+            }
+            is HomeScreenEvents.OnFilterTypeClicked -> {
+                area = homeScreenEvents.filterType
+                getMealsByArea(area)
             }
         }
     }

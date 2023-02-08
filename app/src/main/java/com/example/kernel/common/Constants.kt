@@ -6,4 +6,5 @@ object Constants {
     const val GET_MEALS_URL = "$BASE_URL/filter.php"
     const val GET_MEAL_DETAILS_URL = "$BASE_URL/search.php"
     const val GET_AREAS_URL = "$BASE_URL/list.php"
+    const val GET_MEALS_BY_AREA = "$BASE_URL/filter.php"
 }
