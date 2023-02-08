@@ -1,6 +1,7 @@
 package com.example.kernel.data.remote.repository
 
 import com.example.kernel.common.Constants
+import com.example.kernel.data.remote.dto.AreaDto
 import com.example.kernel.data.remote.dto.CategoryDto
 import com.example.kernel.data.remote.dto.MealDetails
 import com.example.kernel.data.remote.dto.MealDetailsDto
@@ -37,6 +38,13 @@ class RepositoryImpl @Inject constructor(
         return httpClient.get{
             url(Constants.GET_MEAL_DETAILS_URL)
             parameter(key = "f" , value = searchQuery)
+        }
+    }
+
+    override suspend fun getAreas(area: String): AreaDto {
+        return httpClient.get{
+            url(Constants.GET_AREAS_URL)
+            parameter(key = "a" , value = area)
         }
     }
 }
