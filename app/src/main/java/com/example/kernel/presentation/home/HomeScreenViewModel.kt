@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kernel.common.Resource
 import com.example.kernel.domain.use_cases.GetCategoriesUseCase
+import com.example.kernel.domain.use_cases.GetMealsUseCase
 import com.example.kernel.presentation.uievents.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -19,8 +20,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val getCategoriesUseCase: GetCategoriesUseCase
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getMealsUseCase: GetMealsUseCase
 ):ViewModel() {
+    var category by mutableStateOf("beef")
 
     var searchQuery by mutableStateOf("")
 
@@ -30,10 +33,12 @@ class HomeScreenViewModel @Inject constructor(
     private val _state = mutableStateOf(HomeScreenState())
     val state: State<HomeScreenState> = _state
 
+    private val _mealState = mutableStateOf(MealsState())
+    val mealState: State<MealsState> = _mealState
     init {
         getCategories()
+        getMeals(category)
     }
-
     fun getCategories(){
         getCategoriesUseCase().onEach { result ->
             when(result){
@@ -51,6 +56,22 @@ class HomeScreenViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    fun getMeals(category: String?){
+        getMealsUseCase(category?:"").onEach { result ->
+            when(result){
+                is Resource.Loading -> {
+                    _mealState.value = MealsState(isLoading = true)
+                }
+                is Resource.Error -> {
+                    _mealState.value = MealsState(error = result.message?:"unexpected error occurred")
+                    sendUiEvent(UiEvent.ShowToast(result.message?:"unexpected error occurred"))
+                }
+                is Resource.Success -> {
+                    _mealState.value = MealsState(meals = result.data ?: emptyList())
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
     fun onEvent(homeScreenEvents: HomeScreenEvents){
         when(homeScreenEvents){
             is HomeScreenEvents.OnSearchTextChanged -> {
@@ -64,6 +85,10 @@ class HomeScreenViewModel @Inject constructor(
             }
             is HomeScreenEvents.OnSearchClicked -> {
 
+            }
+            is HomeScreenEvents.OnCategoryClicked -> {
+                category = homeScreenEvents.category
+                getMeals(category)
             }
         }
     }

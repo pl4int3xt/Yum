@@ -65,6 +65,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.kernel.R
 import com.example.kernel.presentation.home.HomeScreenEvents
 import com.example.kernel.presentation.home.HomeScreenViewModel
+import com.example.kernel.presentation.meals.components.SingleMeal
 import com.example.kernel.presentation.screen.Screens
 import com.example.kernel.presentation.shared.MainTopAppBar
 import com.example.kernel.presentation.uievents.UiEvent
@@ -81,6 +82,7 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     val state = viewModel.state.value
+    val mealState = viewModel.mealState.value
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -99,16 +101,7 @@ fun HomeScreen(
         }
     }
 
-    Scaffold(
-        topBar = {
-            MainTopAppBar(
-                scrollBehavior = scrollBehavior,
-                title = "Home",
-                navigationIcon = Icons.Default.Home,
-                onClickNavigation = { /*TODO*/ }) {
-            }
-        },
-    ) {
+    Scaffold() {
         if (state.isLoading){
             val lottieCompositionSpec by rememberLottieComposition(
                 spec = LottieCompositionSpec.RawRes(R.raw.loading)
@@ -120,16 +113,6 @@ fun HomeScreen(
             )
         } else {
             Column() {
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "person")
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
-                }
                 TextField(
                     colors = TextFieldDefaults.textFieldColors(
                         textColor = MaterialTheme.colorScheme.tertiary,
@@ -138,7 +121,10 @@ fun HomeScreen(
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent
                     ),
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                    ,
                     value = viewModel.searchQuery, onValueChange = {
                         viewModel.onEvent(HomeScreenEvents.OnSearchTextChanged(it))
                     },
@@ -185,47 +171,45 @@ fun HomeScreen(
                         }
                     )
                 )
-                LazyRow(){
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                ){
                     items(state.categories.size) { i ->
                         CategoryCard(
                             name = state.categories[i].name,
                             image = state.categories[i].thumb,
                             onclick = {
-                                navHostController.navigate(
-                                    Screens.MealsScreen.route + "/${state.categories[i].name}"
-                                )
+                                viewModel.onEvent(HomeScreenEvents.OnCategoryClicked(state.categories[i].name))
                             }
                         )
                     }
                 }
-                LazyColumn() {
-                    item {
-                        Column(
-                            modifier = Modifier.height(100.dp)
-                        ) {
-
+                Box{
+                    if (mealState.isLoading){
+                        val lottieCompositionSpec by rememberLottieComposition(
+                            spec = LottieCompositionSpec.RawRes(R.raw.loading)
+                        )
+                        LottieAnimation(
+                            composition = lottieCompositionSpec,
+                            iterations = Int.MAX_VALUE,
+                            alignment = Alignment.Center
+                        )
+                    } else {
+                        LazyColumn(){
+                            items(mealState.meals.size){ i ->
+                                SingleMeal(
+                                    name = mealState.meals[i].name,
+                                    image = mealState.meals[i].thumb,
+                                    onclick = {
+                                        navHostController.navigate(
+                                            Screens.DescriptionScreen.route + "/${mealState.meals[i].name}")
+                                    }
+                                )
+                            }
                         }
                     }
-                    item {
-                        Text(
-                            modifier = Modifier.padding(5.dp),
-                            text = "Find Best Recipe\nfor cooking",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 25.sp
-                        )
-                    }
-                    item {
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            modifier = Modifier.padding(5.dp),
-                            text = "Categories",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
-                    }
-                }
-                LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-
                 }
             }
         }
