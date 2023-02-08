@@ -127,10 +127,14 @@ fun HomeScreen(
         } else {
             Box {
                 if (viewModel.showDialog){
-                    Dialog(onDismissRequest = { viewModel.showDialog = false }) {
-                        LazyColumn(){
-                            items(areasState.areas){
-                                Text(text = it.area)
+                    Dialog(
+                        onDismissRequest = { viewModel.showDialog = false }
+                    ) {
+                        Card(onClick = { /*TODO*/ }) {
+                            LazyColumn(){
+                                items(areasState.areas){
+                                    Text(text = it.area)
+                                }
                             }
                         }
                     }
@@ -146,8 +150,8 @@ fun HomeScreen(
                         Card(
                             modifier = Modifier.padding(20.dp),
                             onClick = {
-                                viewModel.showDialog = !viewModel.showDialog
-                                viewModel.onEvent(HomeScreenEvents.OnFilterClicked) },
+                                viewModel.onEvent(HomeScreenEvents.OnFilterClicked)
+                                viewModel.showDialog = !viewModel.showDialog },
                             elevation = CardDefaults.cardElevation(
                                 defaultElevation = 20.dp
                             )
