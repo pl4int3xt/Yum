@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.kernel.common.Resource
 import com.example.kernel.domain.use_cases.GetCategoriesUseCase
 import com.example.kernel.domain.use_cases.GetMealsUseCase
+import com.example.kernel.domain.use_cases.SearchMealUseCase
 import com.example.kernel.presentation.uievents.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val getMealsUseCase: GetMealsUseCase
+    private val getMealsUseCase: GetMealsUseCase,
+    private val searchMealUseCase: SearchMealUseCase
 ):ViewModel() {
     var category by mutableStateOf("beef")
 
@@ -39,7 +41,7 @@ class HomeScreenViewModel @Inject constructor(
         getCategories()
         getMeals(category)
     }
-    fun getCategories(){
+    private fun getCategories(){
         getCategoriesUseCase().onEach { result ->
             when(result){
                 is Resource.Loading -> {
@@ -56,8 +58,25 @@ class HomeScreenViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getMeals(category: String?){
+    private fun getMeals(category: String?){
         getMealsUseCase(category?:"").onEach { result ->
+            when(result){
+                is Resource.Loading -> {
+                    _mealState.value = MealsState(isLoading = true)
+                }
+                is Resource.Error -> {
+                    _mealState.value = MealsState(error = result.message?:"unexpected error occurred")
+                    sendUiEvent(UiEvent.ShowToast(result.message?:"unexpected error occurred"))
+                }
+                is Resource.Success -> {
+                    _mealState.value = MealsState(meals = result.data ?: emptyList())
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun searchMeal(searchQuery: String){
+        searchMealUseCase(searchQuery).onEach { result ->
             when(result){
                 is Resource.Loading -> {
                     _mealState.value = MealsState(isLoading = true)
@@ -80,11 +99,8 @@ class HomeScreenViewModel @Inject constructor(
             is HomeScreenEvents.OnExitClicked -> {
 
             }
-            is HomeScreenEvents.OnCancelClicked -> {
-
-            }
             is HomeScreenEvents.OnSearchClicked -> {
-
+                searchMeal(searchQuery)
             }
             is HomeScreenEvents.OnCategoryClicked -> {
                 category = homeScreenEvents.category

@@ -10,8 +10,9 @@ import io.ktor.client.features.ServerResponseException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
+import javax.inject.Inject
 
-class SearchMealUseCase(
+class SearchMealUseCase @Inject constructor(
     private val repositoryService: RepositoryService
 ) {
     operator fun invoke(searchQuery: String): Flow<Resource<List<MealModel>>> = flow {

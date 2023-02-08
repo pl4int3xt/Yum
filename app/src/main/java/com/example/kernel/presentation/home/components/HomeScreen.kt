@@ -2,6 +2,7 @@ package com.example.kernel.presentation.home.components
 
 import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +24,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Person
@@ -32,6 +34,8 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -44,6 +48,9 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -83,6 +90,7 @@ fun HomeScreen(
     val context = LocalContext.current
     val state = viewModel.state.value
     val mealState = viewModel.mealState.value
+    var showMenu by remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -114,64 +122,27 @@ fun HomeScreen(
         } else {
             Column() {
                 Spacer(modifier = Modifier.height(20.dp))
-                TextField(
-                    colors = TextFieldDefaults.textFieldColors(
-                        textColor = MaterialTheme.colorScheme.tertiary,
-                        cursorColor = MaterialTheme.colorScheme.primary,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp)
-                    ,
-                    value = viewModel.searchQuery, onValueChange = {
-                        viewModel.onEvent(HomeScreenEvents.OnSearchTextChanged(it))
-                    },
-                    placeholder = {
-                        Text(
-                            color = MaterialTheme.colorScheme.tertiary,
-                            modifier = Modifier.alpha(0.5f),
-                            text = "search meal here .....")},
-                    singleLine = true,
-                    leadingIcon = {
-                        IconButton(
-                            modifier = Modifier.alpha(0.5f),
-                            onClick = { /*TODO*/ }) {
+                Row(
+                    modifier = Modifier.padding(20.dp)
+                ) {
+                    Spacer(modifier = Modifier.weight(1f))
+                    Box(modifier = Modifier.weight(1f)) {
+                        IconButton(onClick = { showMenu = !showMenu }) {
                             Icon(
-                                tint = MaterialTheme.colorScheme.tertiary,
-                                imageVector = Icons.Default.Search,
-                                contentDescription = "search icon"
+                                imageVector = Icons.Default.FilterList,
+                                contentDescription = "filter list"
                             )
+                            DropdownMenu(
+                                expanded = showMenu,
+                                onDismissRequest = { showMenu = false }) {
+                                DropdownMenuItem(
+                                    onClick = { },
+                                    text = { Text(text = "none")}
+                                )
+                            }
                         }
-                    },
-                    trailingIcon = {
-                        IconButton(
-                            onClick = {
-                                if (viewModel.searchQuery.isNotEmpty()){
-                                    viewModel.onEvent(HomeScreenEvents.OnSearchTextChanged(""))
-                                } else {
-
-                                }
-                            }) {
-                            Icon(
-                                tint = MaterialTheme.colorScheme.tertiary,
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "close icon"
-                            )
-                        }
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Search
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onSearch = {
-                            viewModel.onEvent(HomeScreenEvents.OnSearchClicked)
-                            keyboardController?.hide()
-                        }
-                    )
-                )
+                    }
+                }
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
