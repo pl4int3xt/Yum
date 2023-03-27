@@ -5,16 +5,16 @@ Yum is A cooking Recipe App Built with Jetpack Compose using themealdb API. The 
 ## **Screenshots**
 
 - #### Light Mode
-<img src="./images/splashscreenlight.png" width="320">&emsp;
-<img src="./images/homelight.png" width="320">&emsp;
-<img src="./images/filterlight.png" width="320">&emsp;
-<img src="./images/detailslight.png" width="320">
+<img src="./images/splashscreenlight.jpg" width="320">&emsp;
+<img src="./images/homelight.jpg" width="320">&emsp;
+<img src="./images/filterlight.jpg" width="320">&emsp;
+<img src="./images/detailslight.jpg" width="320">
 
 - #### Dark Mode
-<img src="./images/splashscreendark.png" width="320">&emsp;
-<img src="./images/homedark" width="320">&emsp;
-<img src="./images/filterdark" width="320">&emsp;
-<img src="./images/detailsdark" width="320">
+<img src="./images/splashscreendark.jpg" width="320">&emsp;
+<img src="./images/homedark.jpg" width="320">&emsp;
+<img src="./images/filterdark.jpg" width="320">&emsp;
+<img src="./images/detailsdark.jpg" width="320">
 
 ## Tech Stack
  - [Kotlin](https://kotlinlang.org/docs/reference/) - Kotlin is a cross-platform, statically typed, general-purpose programming language with type inference. Kotlin is designed to interoperate fully with Java, and the JVM version of Kotlin's standard library depends on the Java Class Library, but type inference allows its syntax to be more concise
