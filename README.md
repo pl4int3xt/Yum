@@ -5,7 +5,7 @@ Yum is A cooking Recipe App Built with Jetpack Compose using themealdb API. The 
 ## **Screenshots**
 
 - #### Light Mode
-<img src="./images/splashscreenlight.jpg" width="320">&emsp;
+<img src="./images/splashsreenlight.jpg" width="320">&emsp;
 <img src="./images/homelight.jpg" width="320">&emsp;
 <img src="./images/filterlight.jpg" width="320">&emsp;
 <img src="./images/detailslight.jpg" width="320">
