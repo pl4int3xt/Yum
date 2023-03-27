@@ -3,6 +3,7 @@ package com.example.kernel.presentation.home.components
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
@@ -96,6 +98,9 @@ fun HomeScreen(
                         onDismissRequest = { viewModel.showDialog = false }
                     ) {
                         Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = if(isSystemInDarkTheme()) Color.Black else Color.White
+                            ),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(500.dp)
@@ -144,8 +149,9 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(20.dp))
                     Row(
                         modifier = Modifier
-                            .padding(20.dp)
-                            .fillMaxWidth()
+                            .padding(10.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = "Yum",
@@ -154,12 +160,12 @@ fun HomeScreen(
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Card(
-                            modifier = Modifier.padding(20.dp),
+                            modifier = Modifier.padding(10.dp),
                             onClick = {
                                 viewModel.onEvent(HomeScreenEvents.OnFilterClicked)
                                 viewModel.showDialog = !viewModel.showDialog },
                             elevation = CardDefaults.cardElevation(
-                                defaultElevation = 20.dp
+                                defaultElevation = 5.dp
                             )
                         ) {
                             Icon(
